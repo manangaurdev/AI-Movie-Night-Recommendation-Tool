@@ -60,3 +60,12 @@ plt.xlabel('Vote Count')
 plt.ylabel('Frequency')
 plt.grid(True)
 plt.show()
+
+# Task-2: Simple recommender based on popularity or highest rating
+
+"""
+In short, a recommender is any system that generates suggestions for an end user. We will start with creating the simplest recommender, one that ranks all movies according to the highest average score, or the highest number of votes. 
+
+This kind of recommender generates the same output for anyone using it.
+
+"""
