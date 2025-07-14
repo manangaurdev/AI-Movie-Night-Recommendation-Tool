@@ -69,3 +69,21 @@ In short, a recommender is any system that generates suggestions for an end user
 This kind of recommender generates the same output for anyone using it.
 
 """
+def simple_recommender(movies_metadata, criterion='vote_average', top_n=10):
+    if criterion not in ['vote_average', 'vote_count']:
+        raise ValueError("Criterion must be either 'vote_average' or 'vote_count'")
+    
+    # Sort the movies based on the specified criterion
+    recommended_movies = movies_metadata.sort_values(by=criterion, ascending=False)
+
+    # Select the top N movies
+    recommended_movies = recommended_movies[['movie_id', 'title', 'overview', criterion]].head(top_n)
+
+    return recommended_movies
+
+top_movies_by_average = simple_recommender(movies_metadata, criterion='vote_average', top_n=10)
+top_movies_by_count = simple_recommender(movies_metadata, criterion='vote_count', top_n=10)
+
+# Display the top movies
+top_movies_by_average
+# top_movies_by_count
