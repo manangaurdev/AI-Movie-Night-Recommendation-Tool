@@ -87,3 +87,5 @@ top_movies_by_count = simple_recommender(movies_metadata, criterion='vote_count'
 # Display the top movies
 top_movies_by_average
 # top_movies_by_count
+
+# Task-3: Generate recommendations based on user ratings
