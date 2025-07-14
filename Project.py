@@ -34,13 +34,4 @@ The data is contained in two CSV files named `movies_metadata.csv` and `ratings.
 
 # Task 1: Import the ratings and movie metadata and explore it. 
 import pandas as pd
-import matplotlib.pyplot as plt
 
-# Reading the movies_metadata file
-movies_metadata = pd.read_csv('movies_metadata.csv')
-
-# Reading the ratings file
-ratings = pd.read_csv('ratings.csv')
-
-# Counting how many unique movies there are
-unique_movies = movies_metadata['movie_id'].nunique()
