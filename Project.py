@@ -34,4 +34,29 @@ The data is contained in two CSV files named `movies_metadata.csv` and `ratings.
 
 # Task 1: Import the ratings and movie metadata and explore it. 
 import pandas as pd
+import matplotlib.pyplot as plt
 
+# Reading the movies_metadata file
+movies_metadata = pd.read_csv('movies_metadata.csv')
+
+# Reading the ratings file
+ratings = pd.read_csv('ratings.csv')
+
+# Counting how many unique movies there are
+unique_movies = movies_metadata['movie_id'].nunique()
+
+# Counting how many unique users have rated how many unique movies
+unique_users = ratings['user_id'].nunique()
+unique_rated_movies = ratings['movie_id'].nunique()
+
+print(f"Number of unique movies: {unique_movies}")
+print(f"Number of unique users: {unique_users}")
+
+# Visualse the vote_average column
+plt.figure(figsize=(10,5))
+plt.hist(movies_metadata['vote_average'].dropna(), bins=20, edgecolor='k', alpha=0.7)
+plt.title('Distribution of Vote Average')
+plt.xlabel('Vote Count')
+plt.ylabel('Frequency')
+plt.grid(True)
+plt.show()
