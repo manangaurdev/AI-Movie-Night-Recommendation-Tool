@@ -88,7 +88,10 @@ top_movies_by_count = simple_recommender(movies_metadata, criterion='vote_count'
 top_movies_by_average
 # top_movies_by_count
 
+
 # Task-3: Generate recommendations based on user ratings
+
+
 from sklearn.metrics.pairwise import cosine_similarity
 
 def create_user_based_recommender(movies_metadata, ratings, movie_title, top_n=10):
@@ -114,4 +117,22 @@ def create_user_based_recommender(movies_metadata, ratings, movie_title, top_n=1
 
 movie_title = "The Godfather" # Replace with the movie title you want to get recommendations for
 recommended_movies = create_user_based_recommender(movies_metadata, ratings, movie_title, top_n=10)
-recommended_movies
+# recommended_movies 
+
+# Task-4:- Generate embeddings based on the movie descriptions
+
+from sentence_transformers import SentenceTransformer
+import pandas as pd
+from tqdm import tqdm
+
+# Load a pre-trained model from Sentence Transformers
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Ensure the 'overview' column is filled with strings
+movies_metadata['overview'] = movies_metadata['overview'].fillna('').astype(str)
+
+# Generate embeddings for each movie overview
+tqdm.pandas(desc="Generating embeddings")
+movies_metadata['embedding'] = movies_metadata['overview'].progress_apply(lambda x: model.encode(x).tolist())
+
+
