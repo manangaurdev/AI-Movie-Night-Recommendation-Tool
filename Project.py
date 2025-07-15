@@ -125,14 +125,6 @@ from sentence_transformers import SentenceTransformer
 import pandas as pd
 from tqdm import tqdm
 
-# Load a pre-trained model from Sentence Transformers
-model = SentenceTransformer('all-MiniLM-L6-v2')
 
-# Ensure the 'overview' column is filled with strings
-movies_metadata['overview'] = movies_metadata['overview'].fillna('').astype(str)
-
-# Generate embeddings for each movie overview
-tqdm.pandas(desc="Generating embeddings")
-movies_metadata['embedding'] = movies_metadata['overview'].progress_apply(lambda x: model.encode(x).tolist())
 
 
