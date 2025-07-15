@@ -89,3 +89,29 @@ top_movies_by_average
 # top_movies_by_count
 
 # Task-3: Generate recommendations based on user ratings
+from sklearn.metrics.pairwise import cosine_similarity
+
+def create_user_based_recommender(movies_metadata, ratings, movie_title, top_n=10):
+    # Merge movies_metadata with ratings
+    movie_ratings = pd.merge(ratings, movies_metadata, on='movie_id')
+
+    # Create a pivot table with users as rows, movies as columns, and ratings as values
+    user_movie_matrix = movie_ratings.pivot_table(index='user_id', columns='title', values='rating')
+
+    # Fill NaN values with 0 (assuming unrated movies have a rating of 0)
+    user_movie_matrix.fillna(0, inplace=True)
+
+    # Compute the cosine similarity matrix
+    movie_similarity = cosine_similarity(user_movie_matrix.T)
+
+    # Covert the similarity matrix to a DataFrame
+    movie_similarity_df = pd.DataFrame(movie_similarity, index=user_movie_matrix.columns, columns=user_movie_matrix.columns)
+
+    # Get the list of similar movies
+    similar_movies = movie_similarity_df[movie_title].sort_values(ascending=False)[1:top_n+1]
+
+    return similar_movies
+
+movie_title = "The Godfather" # Replace with the movie title you want to get recommendations for
+recommended_movies = create_user_based_recommender(movies_metadata, ratings, movie_title, top_n=10)
+recommended_movies
