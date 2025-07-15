@@ -139,3 +139,20 @@ movies_metadata['embedding'] = movies_metadata['overview'].progress_apply(lambda
 # Task-5:- Use embedding similarity to generate recommendations
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+
+def recommend_movies(description, n=5):
+    # Generate embedding for the user input description
+    user_embedding = model.encode(description).tolist()
+
+    # Calculate cosine similarity between user embedding and all movie embeddings
+    movies_metadata['similarity'] = movies_metadata['embedding'].apply(lambda x: cosine_similarity([user_embedding]))
+
+    # Sort movies by similarity and get top n recommendations
+    recommendations = movies_metadata.sort_values(by='similarity', ascending=False).head(n)
+
+    return recommendations[['title', 'overview', 'similarity']]
+
+# Example usage
+user_description = "A thrilling adventure with lots of action and suspense."
+recommendations = recommend_movies(user_description, n=5)
+recommendations
